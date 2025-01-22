@@ -1,0 +1,43 @@
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    posts: [Post!]! @hasMany
+}
+
+type Post {
+    id: ID!
+    title: String!
+    content: String!
+    user: User! @belongsTo
+    user_id: ID!
+}
+
+type Query {
+    users: [User!]! @all
+    user(id:ID! @eq): User @find
+    posts: [Post!]! @all
+    post(id: ID! @eq): Post @find
+}
+
+type Mutation {
+    createUser(
+        name: String!
+        email: String!
+        password: String!
+    ): User @create
+
+    createPost(
+        title: String!
+        content: String!
+        user_id: ID!
+    ): Post @create
+
+    updateUser(
+        id: ID!
+        name: String
+        email: String
+    ): User @update
+
+    deleteUser(id:ID!): User @delete
+}
